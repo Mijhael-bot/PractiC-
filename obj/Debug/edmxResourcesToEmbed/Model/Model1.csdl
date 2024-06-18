@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PruebaTecModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Cliente">
+    <Key>
+      <PropertyRef Name="IdCliente" />
+    </Key>
+    <Property Name="IdCliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DNI" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="nombres" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="apellidos" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="fNacimiento" Type="DateTime" Precision="0" Nullable="false" />
+    <NavigationProperty Name="Credito" Relationship="Self.FK_Credito_Cliente" FromRole="Cliente" ToRole="Credito" />
+    <NavigationProperty Name="Pago" Relationship="Self.FK_Pago_Cliente" FromRole="Cliente" ToRole="Pago" />
+    <NavigationProperty Name="Reportes" Relationship="PruebaTecModel.FK_Reportes_Cliente" FromRole="Cliente" ToRole="Reportes" />
+  </EntityType>
+  <EntityType Name="Credito">
+    <Key>
+      <PropertyRef Name="IdCredito" />
+    </Key>
+    <Property Name="IdCredito" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
+    <Property Name="IdCliente" Type="Int32" Nullable="false" />
+    <Property Name="montoCredito" Type="Double" Nullable="false" />
+    <Property Name="nroCuotas" Type="Int32" Nullable="false" />
+    <Property Name="TEA" Type="Double" Nullable="false" />
+    <Property Name="TEM" Type="Double" Nullable="false" />
+    <NavigationProperty Name="Cliente" Relationship="Self.FK_Credito_Cliente" FromRole="Credito" ToRole="Cliente" />
+    <NavigationProperty Name="Pago" Relationship="Self.FK_Pago_Credito" FromRole="Credito" ToRole="Pago" />
+    <Property Name="FecCreacion" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Reportes" Relationship="PruebaTecModel.FK_Reportes_Credito" FromRole="Credito" ToRole="Reportes" />
+  </EntityType>
+  <EntityType Name="Pago">
+    <Key>
+      <PropertyRef Name="IdPago" />
+    </Key>
+    <Property Name="IdCliente" Type="Int32" Nullable="false" />
+    <Property Name="IdCredito" Type="Int32" Nullable="false" />
+    <Property Name="IdPago" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nroCuota" Type="Int32" Nullable="false" />
+    <Property Name="FecPago" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="montoCuota" Type="Double" Nullable="false" />
+    <NavigationProperty Name="Cliente" Relationship="Self.FK_Pago_Cliente" FromRole="Pago" ToRole="Cliente" />
+    <NavigationProperty Name="Credito" Relationship="Self.FK_Pago_Credito" FromRole="Pago" ToRole="Credito" />
+    <Property Name="interes" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Reportes" Relationship="PruebaTecModel.FK_Reportes_Pago" FromRole="Pago" ToRole="Reportes" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_Credito_Cliente">
+    <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+    <End Role="Credito" Type="Self.Credito" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cliente">
+        <PropertyRef Name="IdCliente" />
+      </Principal>
+      <Dependent Role="Credito">
+        <PropertyRef Name="IdCliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Pago_Cliente">
+    <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+    <End Role="Pago" Type="Self.Pago" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cliente">
+        <PropertyRef Name="IdCliente" />
+      </Principal>
+      <Dependent Role="Pago">
+        <PropertyRef Name="IdCliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Pago_Credito">
+    <End Role="Credito" Type="Self.Credito" Multiplicity="1" />
+    <End Role="Pago" Type="Self.Pago" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Credito">
+        <PropertyRef Name="IdCredito" />
+      </Principal>
+      <Dependent Role="Pago">
+        <PropertyRef Name="IdCredito" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PruebaTecEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Cliente" EntityType="Self.Cliente" />
+    <EntitySet Name="Credito" EntityType="Self.Credito" />
+    <EntitySet Name="Pago" EntityType="Self.Pago" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <AssociationSet Name="FK_Credito_Cliente" Association="Self.FK_Credito_Cliente">
+      <End Role="Cliente" EntitySet="Cliente" />
+      <End Role="Credito" EntitySet="Credito" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Pago_Cliente" Association="Self.FK_Pago_Cliente">
+      <End Role="Cliente" EntitySet="Cliente" />
+      <End Role="Pago" EntitySet="Pago" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Pago_Credito" Association="Self.FK_Pago_Credito">
+      <End Role="Credito" EntitySet="Credito" />
+      <End Role="Pago" EntitySet="Pago" />
+    </AssociationSet>
+    <EntitySet Name="Reportes" EntityType="PruebaTecModel.Reportes" />
+    <AssociationSet Name="FK_Reportes_Cliente" Association="PruebaTecModel.FK_Reportes_Cliente">
+      <End Role="Cliente" EntitySet="Cliente" />
+      <End Role="Reportes" EntitySet="Reportes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Reportes_Credito" Association="PruebaTecModel.FK_Reportes_Credito">
+      <End Role="Credito" EntitySet="Credito" />
+      <End Role="Reportes" EntitySet="Reportes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Reportes_Pago" Association="PruebaTecModel.FK_Reportes_Pago">
+      <End Role="Pago" EntitySet="Pago" />
+      <End Role="Reportes" EntitySet="Reportes" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Reportes">
+    <Key>
+      <PropertyRef Name="IdReporte" />
+    </Key>
+    <Property Name="IdCredito" Type="Int32" Nullable="false" />
+    <Property Name="IdPago" Type="Int32" Nullable="false" />
+    <Property Name="IdCliente" Type="Int32" Nullable="false" />
+    <Property Name="CuotasC" Type="Int32" Nullable="false" />
+    <Property Name="FechaP" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CapitalC" Type="Double" Nullable="false" />
+    <Property Name="Intereses" Type="Int32" Nullable="false" />
+    <Property Name="IdReporte" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Cliente" Relationship="PruebaTecModel.FK_Reportes_Cliente" FromRole="Reportes" ToRole="Cliente" />
+    <NavigationProperty Name="Credito" Relationship="PruebaTecModel.FK_Reportes_Credito" FromRole="Reportes" ToRole="Credito" />
+    <NavigationProperty Name="Pago" Relationship="PruebaTecModel.FK_Reportes_Pago" FromRole="Reportes" ToRole="Pago" />
+  </EntityType>
+  <Association Name="FK_Reportes_Cliente">
+    <End Type="PruebaTecModel.Cliente" Role="Cliente" Multiplicity="1" />
+    <End Type="PruebaTecModel.Reportes" Role="Reportes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cliente">
+        <PropertyRef Name="IdCliente" />
+      </Principal>
+      <Dependent Role="Reportes">
+        <PropertyRef Name="IdCliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Reportes_Credito">
+    <End Type="PruebaTecModel.Credito" Role="Credito" Multiplicity="1" />
+    <End Type="PruebaTecModel.Reportes" Role="Reportes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Credito">
+        <PropertyRef Name="IdCredito" />
+      </Principal>
+      <Dependent Role="Reportes">
+        <PropertyRef Name="IdCredito" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Reportes_Pago">
+    <End Type="PruebaTecModel.Pago" Role="Pago" Multiplicity="1" />
+    <End Type="PruebaTecModel.Reportes" Role="Reportes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pago">
+        <PropertyRef Name="IdPago" />
+      </Principal>
+      <Dependent Role="Reportes">
+        <PropertyRef Name="IdPago" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

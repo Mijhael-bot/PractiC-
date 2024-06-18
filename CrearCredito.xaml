@@ -1,0 +1,68 @@
+﻿<Window x:Class="PruebaTecnica.CrearCredito"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PruebaTecnica"
+        mc:Ignorable="d"
+       Title="CrearCredito" Height="550" Width="480">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Column="1"  Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="1" Click="Button_Buscar">Buscar</Button>
+            <TextBox Name="BuscarDni" Grid.Column="0"/>
+        </Grid>
+
+        <Label Grid.ColumnSpan="2" FontWeight="ExtraBlack" FontSize="25" HorizontalAlignment="Center">CREAR CREDITO</Label>
+
+        <Label Grid.Column="0" Grid.Row="1" FontSize="14" FontWeight="Bold">DNI</Label>
+        
+
+        <Label Grid.Column="0" Grid.Row="2"  FontSize="14" FontWeight="Bold">Nombres</Label>
+        <TextBox Name="NombreBuscado" Grid.Column="1"  Grid.Row="2" />
+
+        <Label Grid.Column="0" Grid.Row="3"  FontSize="14" FontWeight="Bold">Apellidos</Label>
+        <TextBox Name="ApellidoBuscado" Grid.Column="1"  Grid.Row="3" />
+
+        <Label Grid.Column="0" Grid.Row="4" FontSize="14" FontWeight="Bold">Monto</Label>
+        <TextBox Name="MontoCreacion" Grid.Column="1"  Grid.Row="4" />
+
+        <Label Grid.Column="0" Grid.Row="5"  FontSize="14" FontWeight="Bold">Numero de Cuotas</Label>
+        <TextBox Name="NumCuotas"  Grid.Column="1"  Grid.Row="5" />
+        
+        <Label Grid.Column="0" Grid.Row="6"  FontSize="14" FontWeight="Bold">Tasa Efectiva Anual</Label>
+        <TextBox Name="teaCreacon"  Grid.Column="1"  Grid.Row="6" />
+        
+        <Label Grid.Column="0" Grid.Row="7"  FontSize="14" FontWeight="Bold">Interes</Label>
+        <TextBox Name="InteresesCrea" Grid.Column="1"  Grid.Row="7" />
+
+        <Label Grid.Column="0" Grid.Row="8" FontSize="14" FontWeight="Bold">Fecha Creacion</Label>
+        <DatePicker Name="dateCreacion" Grid.Column="1" HorizontalAlignment="Left"  Grid.Row="8" VerticalAlignment="Top" SelectedDateFormat="Short" />
+
+
+        <Button Grid.Column="0" Grid.Row="9"  FontWeight="Black" Click="Button_Guardar">Guardar</Button>
+        <Button Grid.Column="1" Grid.Row="9"  FontWeight="Black" Click="Button_Click">Cancelar</Button>
+
+    </Grid>
+   
+</Window>
